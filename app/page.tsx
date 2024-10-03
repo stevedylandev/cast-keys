@@ -47,9 +47,7 @@ export default function Home() {
 			setPollingToken(signInRes.pollingToken);
 			setQrCode(`/api/qr/${signInRes.pollingToken}`);
 
-			const pollReq = await fetch(`/api/poll/${signInRes.pollingToken}`, {
-				cache: "no-store",
-			});
+			const pollReq = await fetch(`/api/poll/${signInRes.pollingToken}`);
 			const pollRes = await pollReq.json();
 
 			const pollStartTime = Date.now();
@@ -59,7 +57,9 @@ export default function Home() {
 					throw Error("Timed out");
 				}
 				const pollReq = await fetch(`/api/poll/${signInRes.pollingToken}`, {
-					cache: "no-store",
+					headers: {
+						"Cache-Control": "no-cache",
+					},
 				});
 				const pollRes = await pollReq.json();
 				console.log(pollRes);
@@ -107,7 +107,7 @@ export default function Home() {
 			{qrCode && !signer && (
 				<div className="flex flex-col gap-4 items-center justify-center">
 					<Image src={qrCode} alt="sign in qr code" height={250} width={250} />
-					<p className="mx-4">
+					<p className="mx-4 mb-12">
 						Scan the QR code to approve in Warpcast, or{" "}
 						<a
 							className="underline"
