@@ -47,7 +47,9 @@ export default function Home() {
 			setPollingToken(signInRes.pollingToken);
 			setQrCode(`/api/qr/${signInRes.pollingToken}`);
 
-			const pollReq = await fetch(`/api/poll/${signInRes.pollingToken}`);
+			const pollReq = await fetch(`/api/poll/${signInRes.pollingToken}`, {
+				cache: "no-store",
+			});
 			const pollRes = await pollReq.json();
 
 			const pollStartTime = Date.now();
@@ -57,9 +59,7 @@ export default function Home() {
 					throw Error("Timed out");
 				}
 				const pollReq = await fetch(`/api/poll/${signInRes.pollingToken}`, {
-					headers: {
-						"Cache-Control": "no-cache",
-					},
+					cache: "no-store",
 				});
 				const pollRes = await pollReq.json();
 				console.log(pollRes);
