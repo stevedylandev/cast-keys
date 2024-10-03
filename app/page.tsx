@@ -90,8 +90,9 @@ export default function Home() {
 	}
 
 	return (
-		<main className="flex flex-col gap-12 min-h-screen justify-start mt-36 items-center">
+		<main className="flex flex-col gap-12 min-h-screen justify-start mt-12 items-center">
 			<div className="flex flex-col gap-4 justify-center items-center">
+				<Image width={250} height={250} src="/logo.png" alt="logo" />
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					Cast Keys
 				</h1>
