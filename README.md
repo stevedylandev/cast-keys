@@ -14,7 +14,7 @@ This app uses an `FID` and `MNEMONIC` phrase for either a Farcaster user or app 
 
 ```
 DEVELOPER_FID= # the FID of the app or user to request the key approval
-DEVELOPER_MNEMONIC= # the mnemonic phrase for the app or user account
+DEVELOPER_MNEMONIC= # the mnemonic phrase for the app or user account in the form "word1 word2 word3 etc.."
 ```
 
 After that you should be able to use the command below and run the app!
