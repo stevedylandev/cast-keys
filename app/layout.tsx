@@ -36,6 +36,13 @@ export const metadata: Metadata = {
 			"Quickly and easily create a signer for your Farcaster account",
 		images: ["https://www.castkeys.xyz/og.png"],
 	},
+	other: {
+		"fc:frame": "vNext",
+		"fc:frame:image": "https://www.castkeys.xyz/og.png",
+		"fc:frame:button:1": "Source Code",
+		"fc:frame:button:1:action": "link",
+		"fc:frame:button:1:target": "https://github.com/stevedylandev/cast-keys",
+	},
 };
 
 export default function RootLayout({

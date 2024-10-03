@@ -99,6 +99,14 @@ export default function Home() {
 				<h4 className="scroll-m-20 text-xl font-semibold tracking-tight text-center mx-2">
 					Quickly and easily create a signer for your Farcaster account
 				</h4>
+				<a
+					className="font-bold underline"
+					href="https://github.com/stevedylandev/cast-keys"
+					target="_blank"
+					rel="noreferrer"
+				>
+					Source Code
+				</a>
 			</div>
 			{loading && ButtonLoading()}
 			{!signer && !loading && (
