@@ -39,9 +39,12 @@ export const metadata: Metadata = {
 	other: {
 		"fc:frame": "vNext",
 		"fc:frame:image": "https://www.castkeys.xyz/og.png",
-		"fc:frame:button:1": "Source Code",
+		"fc:frame:button:1": "Open App",
 		"fc:frame:button:1:action": "link",
-		"fc:frame:button:1:target": "https://github.com/stevedylandev/cast-keys",
+		"fc:frame:button:1:target": "https://castkeys.xyz",
+		"fc:frame:button:2": "Source Code",
+		"fc:frame:button:2:action": "link",
+		"fc:frame:button:2:target": "https://github.com/stevedylandev/cast-keys",
 	},
 };
 
