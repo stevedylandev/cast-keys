@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { CheckIcon, CopyIcon, ReloadIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -14,26 +14,36 @@ interface Signer {
 
 export default function Home() {
 	const [loading, setLoading] = useState(false);
-	const [signer, setSigner] = useState<Signer>();
+	const [signer, setSigner] = useState<Signer | undefined>({
+		publicKey:
+			"0xada17d8e1b20405fab1f47305939facba9148abcda3599f78ca78f83c4257d57",
+		privateKey:
+			"0xada17d8e1b20405fkdjafklasdjflafab1f47305939facba9148abcda3599f78ca78f83c4257d57",
+	});
 	const [qrCode, setQrCode] = useState("");
 	const [pollingToken, setPollingToken] = useState();
 
-	const [copied, setCopied] = useState(false);
+	const [copiedPublic, setCopiedPublic] = useState(false);
+	const [copiedPrivate, setCopiedPrivate] = useState(false);
+	const [copiedBoth, setCopiedBoth] = useState(false);
 
 	const wait = () => new Promise((resolve) => setTimeout(resolve, 1000));
 
-	async function handleCopy() {
-		setCopied(true);
+	async function handleCopy(
+		setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
+	) {
+		setCopiedState(true);
 		await wait();
-		setCopied(false);
+		setCopiedState(false);
 	}
 
-	async function copyToClipboard() {
+	async function copyToClipboard(
+		content: string,
+		setCopiedState: React.Dispatch<React.SetStateAction<boolean>>,
+	) {
 		navigator.clipboard
-			.writeText(
-				`publicKey: ${signer?.publicKey} \n privateKey: ${signer?.privateKey}`,
-			)
-			.then(async () => await handleCopy())
+			.writeText(content)
+			.then(async () => await handleCopy(setCopiedState))
 			.catch(() => alert("Failed to copy"));
 	}
 
@@ -127,33 +137,64 @@ export default function Home() {
 				</div>
 			)}
 			{signer && (
-				<div className="flex flex-col gap-2 justify-center items-center">
+				<div className="flex flex-col gap-2 justify-center items-center w-full max-w-[500px] sm:px-auto px-4">
 					<p className="">Approved! Copy your keys down somewhere safe.</p>
 					<p>Once you refresh the page they cannot be recovered</p>
-					<div className="grid gap-4 py-4">
-						<div className="grid grid-cols-4 items-center gap-4">
-							<Label htmlFor="publicKey" className="text-right">
-								Public Key
-							</Label>
-							<Input
-								id="publicKey"
-								value={signer.publicKey}
-								className="col-span-3"
-							/>
+					<div className="grid gap-4 py-4 w-full">
+						<div className="flex flex-col items-center gap-4 w-full">
+							<div className="flex items-center w-full gap-2">
+								<Label htmlFor="publicKey" className="w-24 text-right">
+									Public
+								</Label>
+								<Input
+									id="publicKey"
+									value={signer.publicKey}
+									className="flex-grow"
+								/>
+								<Button
+									onClick={() =>
+										copyToClipboard(signer.publicKey, setCopiedPublic)
+									}
+								>
+									{copiedPublic ? (
+										<CheckIcon className="h-4 w-4" />
+									) : (
+										<CopyIcon className="h-4 w-4" />
+									)}
+								</Button>
+							</div>
 						</div>
-						<div className="grid grid-cols-4 items-center gap-4">
-							<Label htmlFor="privateKey" className="text-right">
-								Private Key
+						<div className="flex items-center w-full gap-2">
+							<Label htmlFor="privateKey" className="w-24 text-right">
+								Private
 							</Label>
 							<Input
 								id="privatekey"
 								value={signer.privateKey}
 								type="password"
-								className="col-span-3"
+								className="flex-grow"
 							/>
+							<Button
+								onClick={() =>
+									copyToClipboard(signer.privateKey, setCopiedPrivate)
+								}
+							>
+								{copiedPrivate ? (
+									<CheckIcon className="h-4 w-4" />
+								) : (
+									<CopyIcon className="h-4 w-4" />
+								)}
+							</Button>
 						</div>
-						<Button onClick={copyToClipboard}>
-							{copied ? "Copied!" : "Copy to Clipboard"}
+						<Button
+							onClick={() =>
+								copyToClipboard(
+									`publicKey: ${signer?.publicKey} \n privateKey: ${signer?.privateKey}`,
+									setCopiedBoth,
+								)
+							}
+						>
+							{copiedBoth ? "Copied!" : "Copy Both to Clipboard"}
 						</Button>
 						<Button onClick={() => setSigner(undefined)}>Create Another</Button>
 					</div>
