@@ -14,12 +14,7 @@ interface Signer {
 
 export default function Home() {
 	const [loading, setLoading] = useState(false);
-	const [signer, setSigner] = useState<Signer | undefined>({
-		publicKey:
-			"0xada17d8e1b20405fab1f47305939facba9148abcda3599f78ca78f83c4257d57",
-		privateKey:
-			"0xada17d8e1b20405fkdjafklasdjflafab1f47305939facba9148abcda3599f78ca78f83c4257d57",
-	});
+	const [signer, setSigner] = useState<Signer>();
 	const [qrCode, setQrCode] = useState("");
 	const [pollingToken, setPollingToken] = useState();
 
